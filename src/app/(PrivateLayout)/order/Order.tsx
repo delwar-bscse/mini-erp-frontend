@@ -47,13 +47,13 @@ const Order = ({ orderData }: any) => {
             <div className="divide-y">
               {order.items.map((item: any) => (
                 <div
-                  key={item.product._id}
+                  key={item?.product?._id}
                   className="flex items-center justify-between p-5"
                 >
                   <div className="flex items-center gap-4">
                     <Image
-                      src={formatUrl(item.product.image)}
-                      alt={item.product.name}
+                      src={formatUrl(item?.product?.image)}
+                      alt={item?.product?.name}
                       width={70}
                       height={70}
                       unoptimized
@@ -62,11 +62,11 @@ const Order = ({ orderData }: any) => {
 
                     <div>
                       <h4 className="font-semibold text-gray-800">
-                        {item.product.name}
+                        {item?.product?.name}
                       </h4>
 
                       <p className="text-sm text-gray-500">
-                        SKU: {item.product.sku}
+                        SKU: {item?.product?.sku}
                       </p>
                     </div>
                   </div>
@@ -77,7 +77,7 @@ const Order = ({ orderData }: any) => {
                         Price
                       </p>
                       <p className="font-medium">
-                        ৳{item.product.selling_price.toLocaleString()}
+                        ৳{item?.product?.selling_price.toLocaleString()}
                       </p>
                     </div>
 
@@ -95,7 +95,7 @@ const Order = ({ orderData }: any) => {
                       <p className="font-semibold">
                         ৳
                         {(
-                          item.product.selling_price * item.quantity
+                          item?.product?.selling_price * item.quantity
                         ).toLocaleString()}
                       </p>
                     </div>

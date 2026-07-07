@@ -61,7 +61,7 @@ const Category = ({categoryData}: any) => {
         <div className="flex flex-wrap gap-2">
           {categoryData?.map((category:any) => {
             return (
-              <div className="flex items-center justify-between gap-2 border px-2 py-1 rounded-sm">
+              <div key={category._id} className="flex items-center justify-between gap-2 border px-2 py-1 rounded-sm">
                 <p>{category.name}</p>
                 <div className="flex items-center justify-end gap-2">
                   <button onClick={()=> {setSelectedCategoryId(category._id); setNewCategoryName(category.name)}}className="flex items-center gap-2.5 px-3 py-1.5 rounded-lg border border-gray-100 text-gray-500 hover:bg-gray-50 hover:text-gray-900 transition-all text-xs font-bold">

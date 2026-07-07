@@ -36,7 +36,7 @@ const AddProduct = ({categoryList, prevProduct}:{categoryList:any[], prevProduct
     defaultValues:{
       name: prevProduct?.name || "",
       sku: prevProduct?.sku || "",
-      category: categoryList.find((item: any) => item.value === prevProduct.category)?.label || "",
+      category: categoryList?.find((item: any) => item.value === prevProduct?.category)?.label || "",
       purchase_price:prevProduct?.purchase_price || 0,
       selling_price:prevProduct?.selling_price || 0,
       stock_quantity:prevProduct?.stock_quantity || 0
