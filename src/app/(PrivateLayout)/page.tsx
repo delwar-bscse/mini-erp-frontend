@@ -1,5 +1,6 @@
 import { myFetch } from "@/utils/myFetch";
 import Product from "./product/Product";
+import { getUserRoleEmployee } from "@/utils/getUserRoleServer";
 
 type Props = {
   searchParams: Promise<{
@@ -14,6 +15,7 @@ type Props = {
 
 const Page = async ({ searchParams }: Props) => {
   const params = await searchParams;
+  const isEmployee = await getUserRoleEmployee();
 
   const query = new URLSearchParams();
 
@@ -42,6 +44,7 @@ const Page = async ({ searchParams }: Props) => {
     <Product
       productData={res.data}
       categoryList={categoryList}
+      isEmployee={isEmployee}
     />
   );
 };

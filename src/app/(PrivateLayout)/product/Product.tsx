@@ -9,7 +9,7 @@ import ProductCard from "./ProductCard";
 import ProductFilterModal from "@/components/modal/ProductFilterModal";
 import { useRouter } from "next/navigation";
 
-const Product = ({productData, categoryList}: any) => {
+const Product = ({productData, categoryList, isEmployee}: any) => {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [newCategoryName, setNewCategoryName] = useState("")
@@ -58,28 +58,28 @@ const Product = ({productData, categoryList}: any) => {
 
 
           <div className="flex gap-2">
-                   <>
-      <button
-        onClick={() => setOpen(true)}
-        className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white"
-      >
-        <Filter className="h-4 w-4" />
-        Filter Products
-      </button>
+            <>
+              <button
+                onClick={() => setOpen(true)}
+                className="flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-white"
+              >
+                <Filter className="h-4 w-4" />
+                Filter Products
+              </button>
 
-      <ProductFilterModal
-        open={open}
-        onOpenChange={setOpen}
-        categoryList={categoryList}
-        onFilter={(query) => {
-          router.push(`?${query}`);
-        }}
-      />
-    </>
-            <Link href="/product/add-product" className="bg-[#142d22] hover:bg-[#1a3a2e] text-white px-6 py-2.5 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-[#142d22]/20 font-medium">
+              <ProductFilterModal
+                open={open}
+                onOpenChange={setOpen}
+                categoryList={categoryList}
+                onFilter={(query) => {
+                  router.push(`?${query}`);
+                }}
+              />
+            </>
+            {!isEmployee && <Link href="/product/add-product" className="bg-[#142d22] hover:bg-[#1a3a2e] text-white px-6 py-2.5 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-[#142d22]/20 font-medium">
             <Plus className="w-5 h-5" />
             <span>Add Product</span>
-          </Link>
+          </Link>}
           <Link href="/product/view-cart" className="bg-[#142d22] hover:bg-[#1a3a2e] text-white px-6 py-2.5 rounded-xl flex items-center gap-2 transition-all shadow-lg shadow-[#142d22]/20 font-medium">
             <Eye className="w-5 h-5" />
             <span>View Cart</span>
@@ -94,7 +94,7 @@ const Product = ({productData, categoryList}: any) => {
         <div className="flex flex-wrap gap-2">
           {productData?.map((category:any) => {
             return (
-              <ProductCard key={category._id} product={category} />
+              <ProductCard key={category._id} product={category} isEmployee={isEmployee} />
             );
           })}
         </div>

@@ -21,9 +21,10 @@ export type Product = {
 
 type ProductCardProps = {
   product: Product;
+  isEmployee: boolean;
 };
 
-const ProductCard = ({ product }: ProductCardProps) => {
+const ProductCard = ({ product, isEmployee }: ProductCardProps) => {
   const {items, note, addItem, removeItem, updateQuantity, setNote, } = useOrder();
     const [qnt, setQnt] = useState(1);
 
@@ -83,14 +84,14 @@ const ProductCard = ({ product }: ProductCardProps) => {
             SKU: {product.sku}
           </p>
         </div>
-        <div className="flex flex-col items-center justify-end gap-2">
-            <Link href={`/product/add-product?id=${product._id}`} className="">
-              <SquarePen className="size-5 text-blue-500" />
-            </Link>
-            <button onClick={() => handleDelete(product._id)} className="">
-              <Trash2 className="size-5 text-red-500" />
-            </button>
-          </div>
+        {!isEmployee && <div className="flex flex-col items-center justify-end gap-2">
+          <Link href={`/product/add-product?id=${product._id}`} className="">
+            <SquarePen className="size-5 text-blue-500" />
+          </Link>
+          <button onClick={() => handleDelete(product._id)} className="">
+            <Trash2 className="size-5 text-red-500" />
+          </button>
+        </div>}
      </div>
 
         {/* Price */}

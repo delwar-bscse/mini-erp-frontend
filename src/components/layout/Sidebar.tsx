@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard,
   Store,
   ShoppingBasket,
   Users,
@@ -13,9 +12,13 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { deleteCookie } from "cookies-next";
+import { getUserRole } from "@/utils/getUserRoleClient";
+import { EUserRole } from "@/types/types";
+import { useEffect, useState } from "react";
 
-const menuItems = [
- 
+
+
+const menuItemsAdmin = [
   {
     name: "Product",
     icon: Store,
@@ -42,12 +45,68 @@ const menuItems = [
   //   href: "/dashboard",
   // },
 ];
+const menuItemsManager = [
+  {
+    name: "Product",
+    icon: Store,
+    href: "/",
+  },
+  {
+    name: "Order",
+    icon: ShoppingBasket,
+    href: "/order",
+  },
+  {
+    name: "Category",
+    icon: TableProperties,
+    href: "/category",
+  },
+];
+const menuItemsEmployee = [
+  {
+    name: "Product",
+    icon: Store,
+    href: "/",
+  },
+  {
+    name: "Order",
+    icon: ShoppingBasket,
+    href: "/order",
+  }
+];
 
 
 
 const Sidebar = () => {
   const router = useRouter();
   const pathname = usePathname();
+
+  const [menu, setMenu] = useState<any[]>([]);
+
+  useEffect(() => {
+    const loadMenu = async () => {
+      const userRole = await getUserRole();
+
+      switch (userRole) {
+        case EUserRole.ADMIN:
+          setMenu(menuItemsAdmin);
+          break;
+
+        case EUserRole.MANAGER:
+          setMenu(menuItemsManager);
+          break;
+
+        case EUserRole.EMPLOYEE:
+          setMenu(menuItemsEmployee);
+          break;
+
+        default:
+          setMenu([]);
+      }
+    };
+
+    loadMenu();
+  }, []);
 
   const handleLogout = () => {
   try {
@@ -74,7 +133,7 @@ const Sidebar = () => {
 
       {/* Navigation */}
       <nav className="flex-1 px-4 py-4 flex flex-col gap-2">
-        {menuItems.map((item) => {
+        {menu?.map((item) => {
           const isActive = pathname === item.href || (item.href === "/dashboard" && pathname === "/");
           return (
             <Link
