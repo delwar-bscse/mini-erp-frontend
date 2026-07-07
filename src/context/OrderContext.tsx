@@ -53,7 +53,9 @@ export const OrderProvider = ({
 
       return [...prev, item];
     });
+    alert("Item added to cart successfully")
   };
+
 
   const removeItem = (id: string) => {
     setItems((prev) => prev.filter((item) => item.id !== id));
